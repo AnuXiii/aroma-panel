@@ -1,0 +1,31 @@
+{
+  "menu": [],
+  "menu-item": [],
+  "gallery": [
+    {
+      "id": "8b12",
+      "gallery-img": {},
+      "cols": "6"
+    },
+    {
+      "id": "e56c",
+      "gallery-img": {},
+      "cols": "6"
+    },
+    {
+      "id": "b6b6",
+      "gallery-img": {},
+      "cols": "6"
+    },
+    {
+      "id": "95d1",
+      "gallery-img": {},
+      "cols": "6"
+    },
+    {
+      "id": "a19d",
+      "gallery-img": {},
+      "cols": "3"
+    }
+  ]
+}

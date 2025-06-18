@@ -1,0 +1,44 @@
+<section class="section flex-col gap-8">
+	<c-title
+		data-title="لیست انتشارات"
+		data-back="true"></c-title>
+	<!-- for testing -->
+	<div class="w-full overflow-x-auto">
+		<table class="border-separate border-spacing-y-8 text-center w-full">
+			<tr>
+				<th class="whitespace-nowrap p-4 text-xl md:text-2xl font-semibold text-cream/90">آیدی</th>
+				<th class="whitespace-nowrap p-4 text-xl md:text-2xl font-semibold text-cream/90">عنوان</th>
+				<th class="whitespace-nowrap p-4 text-xl md:text-2xl font-semibold text-cream/90">عکس</th>
+				<th class="whitespace-nowrap p-4 text-xl md:text-2xl font-semibold text-cream/90">اقدامات</th>
+			</tr>
+			<!--  -->
+			<tr>
+				<td class="bg-neutral-900 text-cream/80 p-4 font-mono">21332123</td>
+				<td class="bg-neutral-900 text-cream/80 p-4">گالری</td>
+				<td class="bg-neutral-900 text-cream/80 p-4">
+					<img
+						src="/images/black-dots.svg"
+						alt="image"
+						class="w-12 h-12 max-w-12 object-cover border border-solid border-white/10 rounded-lg mx-auto" />
+				</td>
+				<td class="bg-neutral-900 text-cream/80 p-4">
+					<div class="flex-center gap-8">
+						<button
+							title="حذف آیتم"
+							aria-label="حذف آیتم"
+							class="delete-item btn w-max bg-green-500 outline-green-500 border-neutral-900 shadow-[0_8px_20px] shadow-green-500/50">
+							<ion-icon name="pencil"></ion-icon>
+						</button>
+						<button
+							title="حذف آیتم"
+							aria-label="حذف آیتم"
+							class="delete-item btn w-max bg-rose-500 outline-rose-500 border-neutral-900 shadow-[0_8px_20px] shadow-rose-500/50">
+							<ion-icon name="trash"></ion-icon>
+						</button>
+					</div>
+				</td>
+			</tr>
+			<!--  -->
+		</table>
+	</div>
+</section>

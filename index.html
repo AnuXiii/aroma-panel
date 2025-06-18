@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<link
+			rel="icon"
+			type="image/svg+xml"
+			href="/logo.png" />
+		<meta
+			name="viewport"
+			content="width=device-width, user-scalable=no" />
+		<title>Aroma Panel</title>
+		<script
+			type="module"
+			src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+
+		<link
+			rel="stylesheet"
+			href="/src/style.css" />
+	</head>
+	<body>
+		<div id="app">
+			<div class="wrapper flex-between md:gap-12 z-1">
+				<div
+					class="w-full h-full absolute inset-0 bg-[url('/images/black-dots.svg')] bg-cover bg-no-repeat z-[-1]"></div>
+				<div
+					class="w-full h-full absolute inset-0 bg-gradient-to-t from-black/70 via-black to-neutral-900/80 z-[-1]"></div>
+				<c-navigation></c-navigation>
+				<main class="wrapper-inner flex-1"></main>
+			</div>
+		</div>
+		<script
+			type="module"
+			src="/src/main.js"></script>
+	</body>
+</html>

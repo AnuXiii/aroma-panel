@@ -1,0 +1,184 @@
+@import url(css/fonts.css);
+@import url(css/animations.css);
+@import url(css/toastify.css);
+@import "tailwindcss";
+
+@theme {
+	--color-black: #0f0f0f;
+	--color-yellow: #eab308;
+	--color-orange: #f97316;
+	--color-cream: #fefce8;
+	--color-gray: #a3a3a3;
+	--font-dana: "dana", sans-serif;
+	--font-dana-bold: "dana-bold", sans-serif;
+	--ease-custom: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+	html {
+		@apply scroll-smooth scroll-pt-10;
+	}
+
+	html,
+	body {
+		@apply font-dana text-base bg-black text-cream;
+		direction: rtl;
+	}
+
+	body {
+		@apply overflow-x-hidden;
+	}
+
+	i {
+		font-style: normal;
+	}
+
+	li {
+		@apply list-none;
+	}
+
+	button {
+		@apply cursor-pointer;
+	}
+
+	input[type="number"]::-webkit-inner-spin-button {
+		display: none;
+	}
+}
+
+@layer utilities {
+	.flex-column {
+		@apply flex flex-col;
+	}
+
+	.flex-between {
+		@apply flex justify-between;
+	}
+
+	.flex-item-center {
+		@apply flex items-center;
+	}
+
+	.flex-between-center {
+		@apply flex justify-between items-center;
+	}
+
+	.flex-center {
+		@apply flex justify-center items-center;
+	}
+}
+
+@layer components {
+	.wrapper {
+		@apply relative;
+	}
+
+	.wrapper-inner {
+		@apply max-w-7xl p-4 mx-auto overflow-x-auto;
+	}
+
+	.btn {
+		@apply flex justify-center items-center py-3 px-4 bg-yellow rounded-lg text-xl font-semibold text-black w-full md:w-40 border-3 border-solid border-black outline-3 outline-solid outline-yellow duration-200 hover:scale-105 hover:outline-transparent;
+	}
+
+	.btn-submit {
+		@apply relative;
+
+		&.loading::after {
+			@apply content-[""] rounded-full w-8 h-8 border-3 border-solid border-black border-r-orange border-l-orange animate-spin;
+		}
+	}
+
+	.btn-link {
+		@apply w-full py-3 px-4;
+
+		&:hover,
+		&.active {
+			@apply text-black bg-yellow;
+		}
+	}
+
+	.title-container {
+		@apply text-center md:text-right py-8;
+	}
+
+	.title {
+		@apply mb-6 text-2xl md:text-5xl font-dana-bold;
+	}
+
+	.sub-title {
+		@apply text-center text-cream/70 text-sm md:text-xl;
+	}
+
+	[data-type="file"] .label-text {
+		@apply mb-0;
+	}
+
+	.label-text {
+		@apply block text-cream/70 mb-2;
+
+		&::after {
+			@apply content-["*"] text-rose-400 mr-1;
+		}
+	}
+
+	.input {
+		@apply w-full p-3 border border-solid border-white/10 rounded-lg bg-neutral-800 outline-none duration-200 transition-[border] focus-within:border-yellow;
+	}
+}
+
+.navigation {
+	@apply w-20 md:w-[250px] z-20 bg-gradient-to-r from-neutral-900 to-neutral-800 min-h-screen h-full sticky top-0;
+
+	li {
+		&:hover {
+			.tooltip {
+				@apply opacity-100 scale-100;
+			}
+		}
+	}
+}
+
+.tooltip {
+	@apply px-3 py-2 text-nowrap w-max absolute bottom-1/2 translate-y-1/2 left-[-110px] bg-gradient-to-r from-neutral-900 to-neutral-800 rounded-lg opacity-0 scale-90 duration-200 border border-solid border-white/10 pointer-events-none select-none md:hidden;
+}
+
+/* input styles */
+.form-control {
+	@apply w-full;
+}
+
+.form {
+	@apply w-full grid gap-12 grid-cols-1 items-end md:grid-cols-2;
+
+	input {
+		@apply w-full;
+	}
+}
+
+.file {
+	@apply cursor-pointer text-center flex flex-col items-center gap-4 py-6 px-4 w-full text-cream/70;
+	@apply shadow-yellow/10 shadow-2xl bg-gradient-to-r from-yellow/20 via-neutral-900 to-neutral-800  border border-solid border-white/10 rounded-lg;
+
+	i {
+		@apply text-4xl;
+	}
+}
+
+.options-list {
+	&::-webkit-scrollbar {
+		@apply w-1 rounded-full bg-black;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		@apply rounded-full bg-yellow;
+	}
+}
+
+.section {
+	animation: fade-in 0.3s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+}
+
+button:disabled {
+	@apply opacity-60 pointer-events-none;
+}
