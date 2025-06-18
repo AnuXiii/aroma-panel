@@ -1,23 +1,23 @@
 import Toast from "../components/Toast";
 
-function submitStatusController(state, text, action) {
-	const submitBtn = document.querySelector(".btn-submit");
-
-	if (submitBtn) {
-		submitBtn.disabled = state;
-		submitBtn.textContent = text;
-		action === "add" ? submitBtn.classList.add("loading") : submitBtn.classList.remove("loading");
+function submitStatusController(target, status, text, action) {
+	if (target) {
+		target.disabled = status;
+		target.textContent = text;
+		action === "add" ? target.classList.add("loading") : target.classList.remove("loading");
 	}
 }
 
 function FormController() {
 	const form = document.querySelector(".form");
-
 	if (!form) return;
 
-	form.addEventListener("submit", async (e) => {
+	form.addEventListener("submit", (e) => {
 		e.preventDefault();
+	});
 
+	const submitBtn = document.querySelector(".btn-submit");
+	submitBtn.addEventListener("click", async (e) => {
 		const formData = new FormData(form);
 		const data = Object.fromEntries(formData.entries());
 
@@ -30,13 +30,10 @@ function FormController() {
 		}
 
 		try {
-			submitStatusController(true, "", "loading");
+			submitStatusController(submitBtn, true, "", "loading");
 
 			const response = await fetch(`http://localhost:3000/${form.getAttribute("id")}`, {
 				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
 				body: JSON.stringify(data),
 			});
 
@@ -45,13 +42,13 @@ function FormController() {
 				form.reset();
 			} else {
 				Toast("خطا در ارسال فرم", "bg-rose-500");
-				submitStatusController(false, "ارسال", "");
+				submitStatusController(submitBtn, false, "ارسال", "");
 			}
 		} catch (error) {
 			Toast("مشکلی رخ داد", "bg-rose-500");
-			submitStatusController(false, "ارسال", "");
+			submitStatusController(submitBtn, false, "ارسال", "");
 		} finally {
-			submitStatusController(false, "ارسال", "");
+			submitStatusController(submitBtn, false, "ارسال", "");
 		}
 	});
 }

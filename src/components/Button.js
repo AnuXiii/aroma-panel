@@ -8,13 +8,13 @@ class Button extends HTMLElement {
 
 		switch (type) {
 			case "button":
-				html = `<button tabindex="0" type="submit" aria-label="${value}" class="btn btn-submit">${value}</button>`;
+				html = `<button tabindex="0" type="button" aria-label="${value}" class="btn mt-12 btn-submit">${value}</button>`;
 				break;
 			case "link":
-				html = `<a href="${href}" aria-label="${value}" class="btn btn-link">${value}</a>`;
+				html = `<a href="${href}" aria-label="${value}" class="btn mt-12 btn-link">${value}</a>`;
 				break;
 			default:
-				html = `<button tabindex="0" type="submit" aria-label="${value}" class="btn btn-submit">${value}</button>`;
+				html = `<button tabindex="0" type="button" aria-label="${value}" class="btn mt-12 btn-submit">${value}</button>`;
 		}
 
 		this.innerHTML = html;

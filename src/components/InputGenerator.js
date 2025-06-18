@@ -63,7 +63,7 @@ class InputGenerator extends HTMLElement {
 		const fileInput = this?.querySelector('input[type="file"]');
 		const imagePreview = this?.querySelector(".img-preview");
 		const deleteImagePreview = this?.querySelector(".delete-img");
-		let MAX_FILE_SIZE = 2 * 1024 * 1024;
+		let MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB
 
 		if (!fileInput || !imagePreview || !deleteImagePreview) return;
 

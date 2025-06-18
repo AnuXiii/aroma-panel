@@ -47,6 +47,9 @@ class Router {
 
 			// Update content
 			document.querySelector("main").innerHTML = content;
+			// init form controller
+			FormController();
+			//
 
 			// Update active link in navigation
 			document.querySelectorAll(".router-link").forEach((link) => {
@@ -55,10 +58,6 @@ class Router {
 					link.classList.add("active");
 				}
 			});
-
-			setTimeout(() => {
-				FormController();
-			}, 100);
 		} catch (error) {
 			Toast("صفحه بارگزاری نشد", "bg-rose-500");
 		}
