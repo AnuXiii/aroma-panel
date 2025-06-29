@@ -13,6 +13,7 @@ export default defineConfig({
 				menu: "./src/pages/menu.html",
 				menuItem: "./src/pages/menu-item.html",
 				published: "./src/pages/published.html",
+				login: "./src/pages/login.html",
 			},
 		},
 	},

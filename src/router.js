@@ -5,20 +5,33 @@ import { checkLogin, loginController } from "./login";
 import Loader from "./components/Loader";
 import { account } from "./appwriteClinet";
 
-const successContent = `
-	<section class="section flex-center gap-8 flex-col">
-		<c-title
-			data-title="کاربر ${(await account.get()).name} خوش آمدید"
-			data-sub-title="">
-		</c-title>
-		<div class="text-center">
-			<div class="bg-green-500/10 border border-green-500/30 rounded-lg py-6 px-10 mb-6">
-				<ion-icon name="checkmark-circle" class="text-4xl text-green-500 mb-4"></ion-icon>
-				<h3 class="text-xl font-semibold text-green-400 mb-2">ورود موفقیت آمیز بود</h3>
+const getUsername = async () => {
+	try {
+		const user = await account.get();
+		return user.name || "ناشناس";
+	} catch (error) {
+		return "کاربر";
+	}
+};
+
+const createSuccessContent = async () => {
+	const username = await getUsername();
+
+	return `
+		<section class="section flex-center gap-8 flex-col">
+			<c-title
+				data-title="کاربر ${username} خوش آمدید"
+				data-sub-title="">
+			</c-title>
+			<div class="text-center">
+				<div class="bg-green-500/10 border border-green-500/30 rounded-lg py-6 px-10 mb-6">
+					<ion-icon name="checkmark-circle" class="text-4xl text-green-500 mb-4"></ion-icon>
+					<h3 class="text-xl font-semibold text-green-400 mb-2">ورود موفقیت آمیز بود</h3>
+				</div>
 			</div>
-		</div>
-	</section>
-`;
+		</section>
+	`;
+};
 
 class Router {
 	constructor(routes) {
@@ -80,7 +93,7 @@ class Router {
 				// if logged in admin account show the message
 				const isLoggedIn = await checkLogin();
 				if (isLoggedIn) {
-					content = successContent;
+					content = await createSuccessContent();
 				} else {
 					// if not logged in admin account show the login.html default message
 					const response = await fetch("/src/pages/login.html");
