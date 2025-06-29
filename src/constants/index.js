@@ -1,5 +1,10 @@
 const routes = [
 	{
+		path: "/login",
+		name: "ورود",
+		icon: "log-in",
+	},
+	{
 		path: "/gallery",
 		name: "گالری",
 		icon: "images",

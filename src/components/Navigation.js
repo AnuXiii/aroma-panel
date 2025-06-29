@@ -13,20 +13,17 @@ class Navigation extends HTMLElement {
 
             ${routes
 							.map(
-								(map) => `
+								(route) => `
 				<li role="listitem" class="w-full relative flex-between mb-6">
 					<a
-						href="${map.path}"
+						href="${route.path}"
 						role="link"
-						title="${map.name}"
-						aria-label="${map.name}"
+						title="${route.name}"
+						aria-label="${route.name}"
 						class="flex-center md:flex-between gap-4 btn-link router-link">
-						<ion-icon class="text-3xl" name="${map.icon}"></ion-icon>
-                        <span class="flex-1 max-md:hidden">${map.name}</span>
+						<ion-icon class="text-3xl" name="${route.icon}"></ion-icon>
+                        <span class="flex-1 max-md:hidden">${route.name}</span>
 					</a>
-                    <i class="tooltip flex-center">
-                        ${map.name}
-                    </i>
 				</li>
                 `
 							)

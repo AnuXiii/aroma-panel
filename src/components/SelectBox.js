@@ -1,25 +1,61 @@
+import { db, DB_ID } from "../appwriteClinet";
+
+// Load the cafe categoreis we are added on (add new menu) page
+async function loadCategoreis() {
+	const MENUS_ID = import.meta.env.VITE_APPWRITE_MENU_ID;
+
+	const res = await db.listDocuments(DB_ID, MENUS_ID);
+
+	// catch the response and initialize them
+	const options = res.documents.map((menu) => ({
+		category: menu["menu-category-name"],
+		title: menu["menu-title"],
+	}));
+
+	return options;
+}
+
 class SelectBox extends HTMLElement {
-	connectedCallback() {
+	async connectedCallback() {
 		const id = this.dataset.id || "select-box";
 		const defaultValue = this.dataset.default || "";
+		const displayValue = this.dataset.value || "انتخاب کنید";
 		let options = [];
-		options = JSON.parse(this.dataset.options || "[]");
 
+		try {
+			options = JSON.parse(this.dataset.options || "[]");
+		} catch (e) {
+			options = [];
+		}
+
+		// if data-options have no value we loading options from appwrite database
+		if (options.length === 0) {
+			options = await loadCategoreis();
+		}
+
+		// render select box with options / id and default value
+		this.renderSelectBox(options, id, defaultValue, displayValue);
+
+		// run the select box
+		this.initSelectBox();
+	}
+
+	renderSelectBox(options, id, defaultValue, displayValue) {
 		this.innerHTML = `
 			<div class="select-box relative select-none">
 				<div class="selected-display flex-between-center cursor-pointer p-3 border border-solid border-white/10 rounded-lg bg-gradient-to-r from-yellow/20 via-neutral-900 to-neutral-800">
-					<span>انتخاب کنید</span>
+					<span>${displayValue}</span>
 					<ion-icon name="chevron-down-outline" class="icon transition-transform duration-200 ease-custom"></ion-icon>
 				</div>
 				<ul class="options-list divide-y divide-white/20 duration-400 absolute w-full bg-neutral-800 rounded-lg mt-2 h-0 max-h-[150px] overflow-y-auto z-10">
 					${options
 						.map(
-							(item, index) => `
+							(item) => `
 						<li data-value="${
-							item.value || index
-						}" class="p-3 cursor-pointer hover:bg-neutral-700 transition-colors duration-150 rounded-lg">${
-							item.text || item
-						}</li>
+							item.category || item.value
+						}" class="p-3 cursor-pointer hover:bg-neutral-700 transition-colors duration-150 rounded-lg">
+							${item.title || item.text}
+						</li>
 						`
 						)
 						.join("")}
@@ -27,9 +63,7 @@ class SelectBox extends HTMLElement {
 				<input class="input select-input hidden" type="text" id="${id}" name="${id}"
 				value="${defaultValue}" required/>
 			</div>
-        `;
-
-		this.initSelectBox();
+		`;
 	}
 
 	initSelectBox() {
