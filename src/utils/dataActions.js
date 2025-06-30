@@ -6,6 +6,8 @@ import Loader from "../components/Loader";
 // used in edit item function
 const MENUS_ITEMS_ID = import.meta.env.VITE_APPWRITE_ITEMS_ID;
 
+let handleSubmit = null;
+
 // delete item handler
 async function deleteItem(tr) {
 	// get the target element for removing on database and ui
@@ -67,7 +69,11 @@ async function editItem(tr) {
 	const imageInput = document.getElementById("image");
 	const submitBtn = document.querySelector(".btn-submit");
 
-	form.addEventListener("submit", async (e) => {
+	if (handleSubmit) {
+		form.removeEventListener("submit", handleSubmit);
+	}
+
+	handleSubmit = async function (e) {
 		e.preventDefault();
 
 		// control empty inputs when form is submitted same as in FormController file
@@ -84,7 +90,7 @@ async function editItem(tr) {
 		const data = {};
 
 		/* This code will take all the form data (except the field with name="image") 
-		from the FormData object and store it in the data object. */
+			from the FormData object and store it in the data object. */
 		for (let [key, value] of formData.entries()) {
 			if (key !== "image") {
 				data[key] = value;
@@ -125,7 +131,9 @@ async function editItem(tr) {
 		} finally {
 			submitStatusController(submitBtn, false, "ویرایش", "");
 		}
-	});
+	};
+
+	form.addEventListener("submit", handleSubmit);
 }
 
 export { deleteItem, editItem };
