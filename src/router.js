@@ -4,6 +4,7 @@ import { initPublishedCategories } from "./utils/getAllCategoreis";
 import { checkLogin, loginController } from "./login";
 import Loader from "./components/Loader";
 import { account } from "./appwriteClinet";
+import { initDescGenerator } from "./utils/descGenerator";
 
 // Import new components
 import Home from "./pages/Home";
@@ -130,6 +131,10 @@ class Router {
 			// Initialize page-specific functionality
 			if (normalizedPath === "/published") {
 				initPublishedCategories();
+			}
+
+			if (normalizedPath === "/published" || "/menu-item") {
+				initDescGenerator();
 			}
 
 			// Update active link in navigation

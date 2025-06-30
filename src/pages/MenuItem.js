@@ -43,5 +43,5 @@ export default function MenuItem() {
                 </form>
             </div>
         </section>
-    `;
+      `;
 }

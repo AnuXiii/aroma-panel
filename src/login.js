@@ -5,7 +5,6 @@ import { submitStatusController } from "./utils/FormController";
 async function checkLogin() {
 	try {
 		await account.get();
-
 		return true;
 	} catch (error) {
 		return false;

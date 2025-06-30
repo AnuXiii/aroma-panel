@@ -112,7 +112,8 @@ export default function Published() {
                             data-tooltip="محصول فوق اگر دابل شات ندارد عدد 0 را وارد کنید"></c-input>
                         <c-select
                             data-id="category"
-                            data-options></c-select>
+                            data-options
+                            data-value="دسته بندی"></c-select>
                         <c-input
                             data-type="textarea"
                             data-id="desc"
@@ -128,6 +129,5 @@ export default function Published() {
                     </form>
                 </div>
             </div>
-        </div>
-    `;
+        </div>`;
 }

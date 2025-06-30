@@ -38,7 +38,8 @@ class InputGenerator extends HTMLElement {
 				break;
 			case "textarea":
 				inputHtml = `
-					<textarea id="${id}" name="${id}" required class="input max-h-32 min-h-[50px]"></textarea>
+					<textarea id="${id}" name="${id}" required class="input max-h-32 min-h-26"></textarea>
+					<button title="تولید خودکار توضیحات" aria-label="auto description generator" tabindex="0" id="generate-desc" class="generate-desc" type="button">تولید خودکار</button>
 				`;
 				break;
 			default:

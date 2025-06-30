@@ -231,3 +231,12 @@ button:disabled {
 .modal.fade-out {
 	animation: fade-out 0.3s ease-out forwards;
 }
+
+/* desc generator button styles */
+.generate-desc {
+	@apply absolute bottom-2 left-2 bg-orange py-2 px-3 rounded-lg duration-200 ease-custom hover:opacity-80 active:scale-95;
+
+	&.active {
+		@apply animate-pulse pointer-events-none select-none;
+	}
+}
