@@ -2,6 +2,11 @@
 
 A modern admin panel for cafes and restaurants with gallery, menu, and menu items management capabilities
 
+## 🔑 Login as Guest into the panel
+| Email                       | Password                 
+| --------------------------- | ---------------------------
+| guest@gmail.com             | 12345678    
+
 ## 📋 Table of Contents
 
 - [Project Overview](#project-overview)
