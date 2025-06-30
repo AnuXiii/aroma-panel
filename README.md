@@ -3,9 +3,10 @@
 A modern admin panel for cafes and restaurants with gallery, menu, and menu items management capabilities
 
 ## 🔑 Login as Guest into the panel
-| Email                       | Password                 
-| --------------------------- | ---------------------------
-| guest@gmail.com             | 12345678    
+
+| Email           | Password |
+| --------------- | -------- |
+| guest@gmail.com | 12345678 |
 
 ## 📋 Table of Contents
 
@@ -38,8 +39,17 @@ A modern admin panel for cafes and restaurants with gallery, menu, and menu item
 - **File Management**: Upload and manage images with `Appwrite Storage`
 - **Database**: Store data in `Appwrite Database`
 - **Authentication**: Secure authentication system
+- **AI-Powered Descriptions**: Automatically generate product descriptions using Google Gemini.
 - **UI/UX**: Persian interface and user-friendly design
 - **Custom Elements**: Using Web Components for reusable functionality
+
+## 🤖 AI Features
+
+### Automatic Description Generation
+
+- Integrated with **Google Gemini API** to provide intelligent content creation.
+- A smart `Generate Description` button that creates engaging, SEO-friendly, and character-limited (under 200 characters) descriptions for products with a single click.
+- This feature significantly speeds up the content entry process and enhances product presentation on the main website.
 
 ## 🛠️ Technologies Used
 
