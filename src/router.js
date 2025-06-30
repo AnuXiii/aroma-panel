@@ -5,12 +5,20 @@ import { checkLogin, loginController } from "./login";
 import Loader from "./components/Loader";
 import { account } from "./appwriteClinet";
 
+// Import new components
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Gallery from "./pages/Gallery";
+import Menu from "./pages/Menu";
+import MenuItem from "./pages/MenuItem";
+import Published from "./pages/Published";
+
 const getUsername = async () => {
 	try {
 		const user = await account.get();
 		return user.name || "ناشناس";
 	} catch (error) {
-		return "کاربر";
+		return "ناشناس";
 	}
 };
 
@@ -70,7 +78,7 @@ class Router {
 
 	async handleRoute() {
 		const path = window.location.pathname;
-		const route = this.routes.find((route) => route.path === path);
+		// const route = this.routes.find((route) => route.path === path);
 
 		if (path !== "/login" && path !== "/") {
 			const isLoggedIn = await checkLogin();
@@ -86,28 +94,25 @@ class Router {
 			Loader(document.querySelector(".wrapper-inner"), true);
 
 			if (path === "/") {
-				// Load home page content
-				const response = await fetch("/src/pages/home.html");
-				content = await response.text();
+				content = Home();
 			} else if (path === "/login") {
-				// if logged in admin account show the message
 				const isLoggedIn = await checkLogin();
 				if (isLoggedIn) {
 					content = await createSuccessContent();
 				} else {
-					// if not logged in admin account show the login.html default message
-					const response = await fetch("/src/pages/login.html");
+					content = Login();
 					Toast(`لطفا وارد حساب کاربر خود شوید`, "bg-rose-500");
-					content = await response.text();
 				}
-			} else if (route) {
-				// Load menu content
-				const response = await fetch(`/src/pages${route.path}.html`);
-				content = await response.text();
+			} else if (path === "/gallery") {
+				content = Gallery();
+			} else if (path === "/menu") {
+				content = Menu();
+			} else if (path === "/menu-item") {
+				content = MenuItem();
+			} else if (path === "/published") {
+				content = Published();
 			} else {
-				// Fallback to home page
-				const response = await fetch("/src/pages/home.html");
-				content = await response.text();
+				content = Home();
 			}
 
 			// Update content
