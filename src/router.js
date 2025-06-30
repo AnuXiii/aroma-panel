@@ -42,8 +42,7 @@ const createSuccessContent = async () => {
 };
 
 class Router {
-	constructor(routes) {
-		this.routes = routes;
+	constructor() {
 		this.init();
 
 		// Add click event listener to navigation links
@@ -55,78 +54,88 @@ class Router {
 				this.navigate(href);
 			}
 		});
+
+		// Handle browser back/forward buttons
+		window.addEventListener("popstate", () => this.handleRoute());
 	}
 
 	async init() {
 		const isLoggedIn = await checkLogin();
+		const path = window.location.pathname;
 
-		if (!isLoggedIn && window.location.pathname !== "/login") {
-			window.location.href = "/login";
+		if (!isLoggedIn && path !== "/login") {
+			this.navigate("/login");
 			return;
 		}
 
-		if (isLoggedIn && window.location.pathname === "/login") {
-			window.location.href = "/home";
+		if (isLoggedIn && path === "/login") {
+			this.navigate("/home");
 			return;
 		}
 
 		// Initial route
 		this.handleRoute();
-		// Add event listener for popstate (browser back/forward)
-		window.addEventListener("popstate", () => this.handleRoute());
 	}
 
 	async handleRoute() {
 		const path = window.location.pathname;
-		// const route = this.routes.find((route) => route.path === path);
 
-		if (path !== "/login" && path !== "/") {
+		if (path !== "/login" && path !== "/" && path !== "/home") {
 			const isLoggedIn = await checkLogin();
 			if (!isLoggedIn) {
-				window.location.href = "/login";
+				this.navigate("/login");
 				return;
 			}
 		}
 
 		try {
-			// insert fetched data on this variable
 			let content;
 			Loader(document.querySelector(".wrapper-inner"), true);
 
-			if (path === "/") {
-				content = Home();
-			} else if (path === "/login") {
-				const isLoggedIn = await checkLogin();
-				if (isLoggedIn) {
-					content = await createSuccessContent();
-				} else {
-					content = Login();
-					Toast(`لطفا وارد حساب کاربر خود شوید`, "bg-rose-500");
-				}
-			} else if (path === "/gallery") {
-				content = Gallery();
-			} else if (path === "/menu") {
-				content = Menu();
-			} else if (path === "/menu-item") {
-				content = MenuItem();
-			} else if (path === "/published") {
-				content = Published();
-			} else {
-				content = Home();
+			// Normalize path
+			const normalizedPath = path === "/" ? "/home" : path;
+
+			switch (normalizedPath) {
+				case "/home":
+					content = Home();
+					break;
+				case "/login":
+					const isLoggedIn = await checkLogin();
+					if (isLoggedIn) {
+						content = await createSuccessContent();
+					} else {
+						content = Login();
+						Toast(`لطفا وارد حساب کاربری خود شوید`, "bg-rose-500");
+					}
+					break;
+				case "/gallery":
+					content = Gallery();
+					break;
+				case "/menu":
+					content = Menu();
+					break;
+				case "/menu-item":
+					content = MenuItem();
+					break;
+				case "/published":
+					content = Published();
+					break;
+				default:
+					content = Home();
 			}
 
 			// Update content
 			document.querySelector("main").innerHTML = content;
 
 			// Initialize page-specific functionality
-			if (path === "/published") {
+			if (normalizedPath === "/published") {
 				initPublishedCategories();
 			}
 
 			// Update active link in navigation
 			document.querySelectorAll(".router-link").forEach((link) => {
 				link.classList.remove("active");
-				if (link.getAttribute("href") === path) {
+				if (link.getAttribute("href") === normalizedPath) {
 					link.classList.add("active");
 
 					// every time when page changed we are running FormController function
@@ -135,29 +144,21 @@ class Router {
 					// run login controller when user trying to log in into the account
 					loginController();
 
-					// reset the navgiation buttons and navigation when page is changed
+					// reset the navigation buttons and navigation when page is changed
 					document.querySelector(".nav-button").firstElementChild.classList.remove("hidden");
 					document.querySelector(".nav-button").lastElementChild.classList.add("hidden");
 					document.querySelector(".navigation").classList.remove("active");
 				}
 			});
 		} catch (error) {
+			console.error("Route error:", error);
 			Toast("صفحه بارگزاری نشد", "bg-rose-500");
 		}
 
 		Loader(document.querySelector(".wrapper-inner"), false);
 	}
 
-	async navigate(path) {
-		// بررسی احراز هویت قبل از navigation
-		if (path !== "/login" && path !== "/") {
-			const isLoggedIn = await checkLogin();
-			if (!isLoggedIn) {
-				window.location.href = "/login";
-				return;
-			}
-		}
-
+	navigate(path) {
 		window.history.pushState({}, "", path);
 		this.handleRoute();
 	}
