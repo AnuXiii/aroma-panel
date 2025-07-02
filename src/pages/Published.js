@@ -41,8 +41,17 @@ export default function Published() {
                 </li>
             </ul>
             <!--  -->
-            <div class="flex-col md:flex-row w-full flex-between-center gap-3 mt-10 mb-5 py-10 border-t border-b border-solid border-white/20">
-                <h1 class="font-semibold text-white/90 text-2xl">مرتب سازی آیتم ها</h1>
+            <div class="flex-col md:flex-row w-full flex-between items-end gap-9 md:gap-6 mt-10 mb-5 py-10 border-t border-b border-solid border-white/20">
+            <div class="search-field flex-column gap-2 w-full md:w-112">
+                    <label for="search" class="flex-item-center flex-row gap-3 text-xl text-white/90">
+                        <span>جستجوی آیتم</span>
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                    <c-input
+                        data-type="search"
+                        data-id="search">
+                    </c-input>
+                </div>
                 <c-select
                     data-id="sort"
                     data-default="newset"
@@ -57,10 +66,10 @@ export default function Published() {
             <div class="w-full overflow-x-auto">
                 <table class="border-separate border-spacing-y-8 text-center w-full">
                     <tr>
-                        <th class="whitespace-nowrap p-4 text-xl md:text-2xl font-semibold text-cream/90">آیدی</th>
-                        <th class="whitespace-nowrap p-4 text-xl md:text-2xl font-semibold text-cream/90">عنوان</th>
-                        <th class="whitespace-nowrap p-4 text-xl md:text-2xl font-semibold text-cream/90">عکس</th>
-                        <th class="whitespace-nowrap p-4 text-xl md:text-2xl font-semibold text-cream/90">اقدامات</th>
+                        <th class="py-4 px-8 text-xl md:text-2xl font-semibold text-cream/90">ردیف</th>
+                        <th class="py-4 px-8 text-xl md:text-2xl font-semibold text-cream/90">عنوان</th>
+                        <th class="py-4 px-8 text-xl md:text-2xl font-semibold text-cream/90">عکس</th>
+                        <th class="py-4 px-8 text-xl md:text-2xl font-semibold text-cream/90">اقدامات</th>
                     </tr>
                     <!--  -->
                     <tbody class="published-table relative">

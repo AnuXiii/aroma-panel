@@ -1,6 +1,4 @@
-import routes from "../constants";
-import { logo } from "../constants";
-
+import { routes, logo } from "../constants";
 class Navigation extends HTMLElement {
 	connectedCallback() {
 		this.innerHTML = `

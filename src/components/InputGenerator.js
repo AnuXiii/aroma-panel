@@ -67,13 +67,18 @@ class InputGenerator extends HTMLElement {
 				<span class="label-text">${label}</span>
 				`
 					: `
-				<span class="label-text">${label}</span>	
+				${label != "" ? `<span class="label-text">${label}</span>` : ""}
 				${inputHtml}				
 				`
 			}
             </label>
         `;
 
+		this.uploadFileHandler();
+		this.textareaValidator();
+	}
+
+	uploadFileHandler() {
 		// handle the upload section
 		let MAX_FILE_SIZE = 2 * 1024 * 1024; // Control Max file size to 2MB
 		const fileInputContainer = this.querySelector(".file");
@@ -130,7 +135,9 @@ class InputGenerator extends HTMLElement {
 			imagePreview.style.backgroundImage = "";
 			fileInput.value = "";
 		}
+	}
 
+	textareaValidator() {
 		// check textarea for controling max chars => 200 char for appwrite
 		const textarea = document.querySelector("textarea");
 		const maxChar = 200;
@@ -147,12 +154,3 @@ class InputGenerator extends HTMLElement {
 customElements.define("c-input", InputGenerator);
 
 export default InputGenerator;
-
-// disabled window drag and drop prevent defaults to control image opened in new tab !
-window.addEventListener("dragover", (e) => {
-	e.preventDefault();
-});
-
-window.addEventListener("drop", (e) => {
-	e.preventDefault();
-});

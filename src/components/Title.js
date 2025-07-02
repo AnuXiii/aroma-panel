@@ -27,11 +27,19 @@ class Title extends HTMLElement {
 	        </div>
         `;
 
+		this.goToPreviousWindow();
+		this.navHandler();
+	}
+
+	// handle go to previous window when back to previous button clicked
+	goToPreviousWindow() {
 		this.querySelector(".back-btn")?.addEventListener("click", () => {
 			window.history.back();
 		});
+	}
 
-		// navigation open and close handler
+	// navigation open and close handler
+	navHandler() {
 		const navButton = this.querySelector(".nav-button");
 		navButton.addEventListener("click", navHandler);
 

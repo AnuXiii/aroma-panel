@@ -33,5 +33,4 @@ const logo = {
 };
 
 /* *********************************** */
-export default routes;
-export { logo };
+export { routes, logo };

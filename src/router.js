@@ -2,11 +2,11 @@ import Toast from "./components/Toast";
 import { FormController } from "./utils/FormController";
 import { initPublishedCategories } from "./utils/getAllCategoreis";
 import { checkLogin, loginController } from "./login";
-import Loader from "./components/Loader";
+import { Loader } from "./components/Loader";
 import { account } from "./appwriteClinet";
 import { initDescGenerator } from "./utils/descGenerator";
 
-// Import new components
+// Import pages components
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Gallery from "./pages/Gallery";
@@ -14,6 +14,7 @@ import Menu from "./pages/Menu";
 import MenuItem from "./pages/MenuItem";
 import Published from "./pages/Published";
 
+// get current user name from appwrite account
 const getUsername = async () => {
 	try {
 		const user = await account.get();
@@ -23,13 +24,14 @@ const getUsername = async () => {
 	}
 };
 
+// Create Success message on login page
 const createSuccessContent = async () => {
+	// get current user name from getUsername() function
 	const username = await getUsername();
-
 	return `
 		<section class="section flex-center gap-8 flex-col">
 			<c-title
-				data-title="کاربر ${username} خوش آمدید"
+				data-title="کاربر ${username /* res => admin... */} خوش آمدید"
 				data-sub-title="">
 			</c-title>
 			<div class="text-center">
@@ -39,6 +41,17 @@ const createSuccessContent = async () => {
 				</div>
 			</div>
 		</section>
+	`;
+};
+
+// Error Message generator when page is not loading or invalid URL
+const createErrorPage = () => {
+	return `
+		<c-title></c-title>
+		<div class="section flex-center flex-col gap-9 fade-in">
+			<img src="/images/404-error.svg" alt="404 error" loading="lazy" class="w-full h-112"/>
+			<h1 class="font-bold text-2xl text-center text-rose-500">متاسفانه صفحه فوق بارگزاری نشد</h1>
+		</div>
 	`;
 };
 
@@ -90,8 +103,8 @@ class Router {
 		}
 
 		try {
-			let content;
 			Loader(document.querySelector(".wrapper-inner"), true);
+			let content;
 
 			// Normalize path
 			const normalizedPath = path === "/" ? "/home" : path;
@@ -99,27 +112,35 @@ class Router {
 			switch (normalizedPath) {
 				case "/home":
 					content = Home();
+					document.title = "Home";
 					break;
 				case "/login":
 					const isLoggedIn = await checkLogin();
+					// if user is logged in account when clicked to login page show success message and welcome
 					if (isLoggedIn) {
 						content = await createSuccessContent();
+						document.title = "Welcome";
 					} else {
 						content = Login();
-						Toast(`لطفا وارد حساب کاربری خود شوید`, "bg-rose-500");
+						document.title = "Login";
+						setTimeout(() => Toast(`لطفا وارد حساب کاربری خود شوید`, "bg-rose-500"), 1000);
 					}
 					break;
 				case "/gallery":
 					content = Gallery();
+					document.title = "Gallery";
 					break;
 				case "/menu":
 					content = Menu();
+					document.title = "Menu";
 					break;
 				case "/menu-item":
 					content = MenuItem();
+					document.title = "Menu Item";
 					break;
 				case "/published":
 					content = Published();
+					document.title = "Published";
 					break;
 				default:
 					content = Home();
@@ -156,8 +177,8 @@ class Router {
 				}
 			});
 		} catch (error) {
-			console.error("Route error:", error);
 			Toast("صفحه بارگزاری نشد", "bg-rose-500");
+			document.querySelector("main").innerHTML = createErrorPage();
 		}
 
 		Loader(document.querySelector(".wrapper-inner"), false);

@@ -3,7 +3,7 @@
 class Button extends HTMLElement {
 	connectedCallback() {
 		const value = this.dataset.value || "دکمه";
-		const type = this.dataset.type || "button"; // نوع پیش‌فرض button
+		const type = this.dataset.type || "button"; // default type is button
 		const href = this.dataset.href || "";
 
 		let html = "";

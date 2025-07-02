@@ -14,7 +14,7 @@ async function generateDescription(e) {
 	if (!generateDescBtn) return;
 
 	const titleInput = document.getElementById("title");
-	const title = titleInput?.value;
+	const title = titleInput?.value.trim();
 
 	if (!title) {
 		Toast("لطفا ابتدا نام محصول را وارد کنید", "bg-rose-500");
@@ -22,7 +22,7 @@ async function generateDescription(e) {
 	}
 
 	generateDescBtn.classList.add("active");
-	generateDescBtn.textContent = "...در حال تولید";
+	generateDescBtn.textContent = "در حال تولید...";
 
 	try {
 		const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${geminiApiKey}`;
@@ -42,16 +42,15 @@ async function generateDescription(e) {
 
 		const data = await response.json();
 		const description = data.candidates[0].content.parts[0].text;
-
 		const descTextarea = document.getElementById("desc");
-		descTextarea.value = "";
+
 		if (descTextarea) {
+			descTextarea.value = "";
 			descTextarea.value = description;
 			Toast("توضیحات با موفقیت تولید شد", "bg-green-500");
 		}
 	} catch (error) {
 		Toast("خطایی در تولید توضیحات رخ داد", "bg-rose-500");
-		console.error(error);
 	} finally {
 		generateDescBtn.classList.remove("active");
 		generateDescBtn.textContent = "تولید خودکار";

@@ -15,12 +15,13 @@ export default function Login() {
                         data-type="email"
                         data-id="email"
                         data-label="ایمیل"
-                        data-tooltip="ایمیل خود را وارد کنید"></c-input>
+                        data-tooltip="ایمیل میهمان guest@gmail.com"></c-input>
                     <c-input
                         data-type="password"
                         data-id="password"
                         data-label="رمز عبور"
-                        data-tooltip="رمز عبور خود را وارد کنید"></c-input>
+                        data-tooltip="رمز عبور میهمان 12345678"
+                    ></c-input>
                     <c-button
                         data-value="ورود"
                         data-type="submit"></c-button>

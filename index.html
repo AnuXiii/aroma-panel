@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fa">
 	<head>
 		<meta charset="UTF-8" />
@@ -10,26 +10,32 @@
 			name="viewport"
 			content="width=device-width, user-scalable=no" />
 		<title>Aroma Panel</title>
+		<!-- ionicons -->
 		<script
 			type="module"
 			src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-
+		<!-- custom css -->
 		<link
 			rel="stylesheet"
 			href="/src/style.css" />
 	</head>
 	<body>
+		<!-- app -->
 		<div id="app">
+			<!-- wrapper -->
 			<div class="wrapper flex-between md:gap-12 z-1">
+				<!-- background -->
 				<div
 					class="w-full h-full absolute inset-0 bg-[url('/images/black-dots.svg')] bg-cover bg-no-repeat z-[-1]"></div>
 				<div
 					class="w-full h-full absolute inset-0 bg-gradient-to-t from-black/70 via-black to-neutral-900/80 z-[-1]"></div>
+				<!-- navigation -->
 				<c-navigation></c-navigation>
 				<!-- main content -->
 				<main class="wrapper-inner flex-1"></main>
 			</div>
 		</div>
+		<!-- script -->
 		<script
 			type="module"
 			src="/src/main.js"></script>

@@ -1,12 +1,14 @@
 import Toast from "../components/Toast";
-import { DB_ID, storage, BUCKET_ID, db } from "../appwriteClinet";
+import { DB_ID, storage, BUCKET_ID, db, Query } from "../appwriteClinet";
 import { submitStatusController, formResetor, formMap } from "./FormController";
-import Loader from "../components/Loader";
+import { Loader } from "../components/Loader";
+import { showData } from "./getAllCategoreis";
 
 // used in edit item function
 const MENUS_ITEMS_ID = import.meta.env.VITE_APPWRITE_ITEMS_ID;
 
-let handleSubmit = null;
+// for stop repeating to add on form submit event listener
+let handleEditSubmit = null;
 
 // delete item handler
 async function deleteItem(tr) {
@@ -30,6 +32,9 @@ async function deleteItem(tr) {
 		} else {
 			tr.remove();
 		}
+
+		Toast("آیتم با موفقیت حذف شد", "bg-green-500");
+		showData(formMap[dbTarget], dbTarget, [Query.orderDesc("$id")]);
 	} catch (error) {
 		// if target element is not deleted show Toast message and also in console
 		if (error.code == 401) {
@@ -42,20 +47,27 @@ async function deleteItem(tr) {
 }
 
 // edit item handler
-async function editItem(tr) {
+function editItem(tr) {
 	// get the target element for editing on database and ui
 	const id = tr.getAttribute("id");
 	// get the target element title
 	const currentTitle = tr.querySelector(".td-title");
 
+	showModal();
+	handleEdit(tr, id, currentTitle);
+}
+
+function showModal() {
 	const editModal = document.getElementById("editModal");
 	// show modal
 	editModal.classList.remove("hidden");
+	document.body.classList.add("overflow-hidden");
 
 	// if click outside of modal then closed
 	editModal.addEventListener("click", (e) => {
 		if (!e.target.closest(".modal-content")) {
 			editModal.classList.add("hidden");
+			document.body.classList.remove("overflow-hidden");
 		}
 	});
 
@@ -63,17 +75,21 @@ async function editItem(tr) {
 	const closeModal = document.getElementById("closeModal");
 	closeModal.addEventListener("click", () => {
 		editModal.classList.add("hidden");
+		document.body.classList.remove("overflow-hidden");
 	});
+}
 
+function handleEdit(tr, id, currentTitle) {
 	const form = document.getElementById("items");
 	const imageInput = document.getElementById("image");
 	const submitBtn = document.querySelector(".btn-submit");
 
-	if (handleSubmit) {
-		form.removeEventListener("submit", handleSubmit);
+	// Remove previous event listener if it exists
+	if (handleEditSubmit) {
+		form.removeEventListener("submit", handleEditSubmit);
 	}
 
-	handleSubmit = async function (e) {
+	handleEditSubmit = async function (e) {
 		e.preventDefault();
 
 		// control empty inputs when form is submitted same as in FormController file
@@ -118,10 +134,11 @@ async function editItem(tr) {
 			currentTitle.textContent = data.title || currentTitle.textContent;
 
 			// All operations are reset
-			editModal.classList.add("hidden");
 			Toast("محصول با موفقیت ویرایش شد", "bg-green-500");
 			form.reset();
 			formResetor();
+			document.body.classList.remove("overflow-hidden");
+			document.getElementById("editModal").classList.add("hidden");
 		} catch (error) {
 			if (error.code == 401) {
 				Toast("نیاز به دسترسی ادمین", "bg-rose-500");
@@ -133,7 +150,7 @@ async function editItem(tr) {
 		}
 	};
 
-	form.addEventListener("submit", handleSubmit);
+	form.addEventListener("submit", handleEditSubmit);
 }
 
 export { deleteItem, editItem };

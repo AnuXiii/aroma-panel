@@ -1,9 +1,8 @@
 import { db, DB_ID } from "../appwriteClinet";
+const MENUS_ID = import.meta.env.VITE_APPWRITE_MENU_ID;
 
 // Load the cafe categoreis we are added on (add new menu) page
 async function loadCategoreis() {
-	const MENUS_ID = import.meta.env.VITE_APPWRITE_MENU_ID;
-
 	const res = await db.listDocuments(DB_ID, MENUS_ID);
 
 	// catch the response and initialize them
@@ -24,7 +23,7 @@ class SelectBox extends HTMLElement {
 
 		try {
 			options = JSON.parse(this.dataset.options || "[]");
-		} catch (e) {
+		} catch (error) {
 			options = [];
 		}
 
@@ -75,6 +74,7 @@ class SelectBox extends HTMLElement {
 		let isOpen;
 
 		selectedDisplay.addEventListener("click", toggleDropdown);
+
 		function toggleDropdown() {
 			isOpen = arrowIcon.classList.toggle("rotate-180");
 
@@ -86,6 +86,7 @@ class SelectBox extends HTMLElement {
 		}
 
 		optionsList.addEventListener("click", (e) => Selected(e));
+
 		function Selected(e) {
 			const validTarget = e.target.closest("li");
 			const selectDisplayValue = selectedDisplay.querySelector("span");

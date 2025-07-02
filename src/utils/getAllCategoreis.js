@@ -1,8 +1,9 @@
 import Toast from "../components/Toast";
 import { db, DB_ID, getImageUrl, Query } from "../appwriteClinet";
-import Loader, { ImageLoader } from "../components/Loader";
+import { Loader, ImageLoader } from "../components/Loader";
 import { formMap } from "./FormController";
 import { deleteItem, editItem } from "./dataActions";
+import { searchItemByName } from "./search";
 
 // data title Fields map
 const titleFieldMap = {
@@ -62,6 +63,7 @@ function initPublishedCategories() {
 
 	// Initialize with first button
 	publishedCategoreis.querySelectorAll(".get-category-btn")[0]?.click();
+	searchItemByName();
 }
 
 async function showData(collectionId, dbTarget, sortBy) {
@@ -74,33 +76,38 @@ async function showData(collectionId, dbTarget, sortBy) {
 		// when data is loading we shoed spin loader component on publishedTable container
 		Loader(publishedTable, true);
 		const getItems = await db.listDocuments(DB_ID, collectionId, sortBy);
-		items = getItems;
+		items = getItems.documents;
 	} catch (error) {
 		// when data is not loaded we are removing spin loader component and show Toast error message in console also
 		Loader(publishedTable, false);
 		Toast("خطا در دریافت اطلاعات", "bg-rose-500");
-		console.error(error);
 	}
 
 	// when data is loaded remove loader component and init titleField
 	Loader(publishedTable, false);
 	const titleField = titleFieldMap[dbTarget];
 
-	items.documents.forEach((item) => {
+	dataGenerator(items, titleField, publishedTable);
+}
+
+function dataGenerator(items, titleField, container) {
+	items.forEach((item, index) => {
 		const tr = document.createElement("tr");
 		tr.setAttribute("id", item.$id);
 		tr.style.viewTransitionName = item.$id;
 		tr.innerHTML = `
-		<td class="bg-neutral-900 text-cream/80 p-4 font-mono text-nowrap">${item.$id}</td>
-		<td class="bg-neutral-900 text-cream/80 p-4 text-nowrap td-title">${item[titleField] || "بدون عنوان"}</td>
-		<td class="bg-neutral-900 text-cream/80 p-4">
+		<td class="bg-neutral-800 text-cream/80 text-2xl font-mono w-12 h-12 border-l border-solid border-white/20">${
+			index + 1
+		}</td>
+		<td class="bg-neutral-900 text-cream/80 py-4 px-8 td-title">${item[titleField] || "بدون عنوان"}</td>
+		<td class="bg-neutral-900 text-cream/80 py-4 px-8">
 			<img
 				src="${getImageUrl(item.$id)}"
 				alt="image"
 				loading="lazy"
-				class="w-12 h-12 max-w-12 object-cover border border-solid border-white/10 rounded-lg mx-auto" />
+				class="w-16 h-16 max-w-16 object-cover border border-solid border-white/10 rounded-lg mx-auto" />
 		</td>
-		<td class="bg-neutral-900 text-cream/80 p-4">
+		<td class="bg-neutral-900 text-cream/80 py-4 px-8">
 			<div class="flex-center gap-8">
 		<!-- if user in menu items page we showing edit item button -->
 		${
@@ -124,7 +131,7 @@ async function showData(collectionId, dbTarget, sortBy) {
 			</div>
 		</td>
 		`;
-		publishedTable.append(tr);
+		container.append(tr);
 
 		// adding deleteItem function to click event on delete button element
 		tr.querySelector(".delete-item").addEventListener("click", () => {
@@ -144,4 +151,4 @@ async function showData(collectionId, dbTarget, sortBy) {
 	});
 }
 
-export { initPublishedCategories };
+export { initPublishedCategories, showData };

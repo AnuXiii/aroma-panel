@@ -78,8 +78,8 @@ function FormController() {
 			// reset the all form inputs and remove preview image from upload section and select default value on select box
 			form.reset();
 			formResetor();
-		} catch (err) {
-			if (err.code == 401) {
+		} catch (error) {
+			if (error.code == 401) {
 				Toast("نیاز به دسترسی ادمین", "bg-rose-500");
 				return;
 			}
