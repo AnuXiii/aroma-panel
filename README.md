@@ -8,18 +8,6 @@ A modern admin panel for cafes and restaurants with gallery, menu, and menu item
 | --------------- | -------- |
 | guest@gmail.com | 12345678 |
 
-## 📋 Table of Contents
-
-- [Project Overview](#project-overview)
-- [Features](#features)
-- [Technologies Used](#technologies-used)
-- [Installation & Setup](#installation--setup)
-- [Environment Variables](#environment-variables)
-- [Project Structure](#project-structure)
-- [Usage Guide](#usage-guide)
-- [Development Roadmap](#development-roadmap)
-- [Contributing](#contributing)
-
 ## 🎯 Project Overview
 
 `Aroma Panel` is a modern and user-friendly admin panel designed for managing cafe and restaurant content. This project uses modern web technologies and connects to `Appwrite` as the backend, providing complete website content management capabilities.
@@ -128,50 +116,6 @@ npm run preview
 | `VITE_APPWRITE_PROJECT_ID`  | Appwrite project ID         | `your-project-id`              |
 | `VITE_APPWRITE_DATABASE_ID` | Database ID                 | `your-database-id`             |
 | `VITE_APPWRITE_BUCKET_ID`   | Storage bucket ID for files | `your-bucket-id`               |
-
-## 📁 Project Structure
-
-```
-aroma-panel/
-├── public/                 # Static files
-│   ├── fonts/             # Persian fonts (Dana)
-│   ├── images/            # Images and icons
-│   └── logo.png           # Project logo
-├── src/
-│   ├── components/        # Reusable components
-│   │   ├── Button.js      # Button component
-│   │   ├── InputGenerator.js # Input generator
-│   │   ├── Loader.js      # Loading component
-│   │   ├── Navigation.js  # Navigation bar
-│   │   ├── SelectBox.js   # Select component
-│   │   ├── Title.js       # Title component
-│   │   └── Toast.js       # Notification component
-│   ├── constants/         # Constants and settings
-│   │   └── index.js       # Routes and settings
-│   ├── css/               # CSS files
-│   │   ├── animations.css # Animations
-│   │   ├── fonts.css      # Font settings
-│   │   └── toastify.css   # Toast styles
-│   ├── pages/             # Main pages
-│   │   ├── home.html      # Home page
-│   │   ├── gallery.html   # Gallery management
-│   │   ├── menu.html      # Menu management
-│   │   ├── menu-item.html # Menu items management
-│   │   └── published.html # View publications
-│   ├── utils/             # Helper functions
-│   │   ├── dataActions.js # Data operations
-│   │   ├── FormController.js # Form control
-│   │   └── getAllCategoreis.js # Get categories
-│   ├── appwriteClinet.js  # Appwrite configuration
-│   ├── login.js           # Authentication logic
-│   ├── main.js           # Application entry point
-│   ├── router.js         # Routing system
-│   └── style.css         # Main styles
-├── index.html            # Main HTML file
-├── package.json          # Dependencies and scripts
-├── vite.config.js        # Vite configuration
-└── tailwind.config.js    # Tailwind configuration
-```
 
 ## 📖 Usage Guide
 
